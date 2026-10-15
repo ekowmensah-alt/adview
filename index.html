@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ad Manager · Secret Sales Retail Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F8FA; --card:#FFFFFF; --ink:#1F2328; --muted:#5F6670; --faint:#8A919C; --line:#E4E7EC; --hover:#F3F5F8;
+  --blue:#1F5EFF; --blue-soft:#E8EEFF; --red:#D93025; --c1:#1F5EFF; --c2:#D93025;
+  --amber-bg:#FFF0C2; --amber:#7A5300; --grey-bg:#ECEEF1; --grey:#5F6670; --red-bg:#FDE4E1; --redt:#A3271C; --green-bg:#DDF3E4; --green:#1E6B3A; --sched-bg:#E8EEFF; --sched:#2A47A8;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#14161B; --card:#1C1F26; --ink:#E7E9ED; --muted:#A3A9B4; --faint:#7D8490; --line:#2D313A; --hover:#242833;
+    --blue:#7B9CFF; --blue-soft:#24304F; --c1:#7B9CFF; --c2:#FF7A6E;
+    --amber-bg:#4A3A0B; --amber:#F7D57A; --grey-bg:#2A2E37; --grey:#A3A9B4; --red-bg:#4A1F1B; --redt:#FFB4AB; --green-bg:#173A25; --green:#8FDCAA; --sched-bg:#24304F; --sched:#B4C6FF; color-scheme: dark; }
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.shell{display:grid;grid-template-columns:184px 1fr;min-height:100%}
+aside{background:var(--card);border-right:1px solid var(--line);padding:16px 10px;position:sticky;top:0;height:100vh}
+.logo{font-weight:700;font-size:15px;padding:4px 10px 16px}
+.logo span{display:block;font-weight:500;color:var(--muted);font-size:12px}
+aside button{display:block;width:100%;text-align:left;border:0;background:none;padding:9px 12px;border-radius:8px;cursor:pointer;color:var(--muted);font-weight:500}
+aside button:hover{background:var(--hover)}
+aside button[aria-current="page"]{background:var(--blue-soft);color:var(--blue);font-weight:600}
+.top{background:var(--card);border-bottom:1px solid var(--line);padding:10px 24px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:4}
+.top h1{font-size:18px;margin:0 auto 0 0;font-weight:600}
+.ctl{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:0;background:var(--card);padding:6px 10px;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--blue-soft);color:var(--blue);font-weight:600}
+main{padding:20px 24px 40px;min-width:0}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px}
+.tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.tile{border:0;background:none;text-align:left;padding:12px 14px;cursor:pointer;border-top:4px solid transparent;border-right:1px solid var(--line)}
+.tile:last-child{border-right:0}
+.tile:hover{background:var(--hover)}
+.tile .l{font-size:12px;color:var(--muted)}
+.tile .v{font-size:20px;font-weight:600;margin-top:2px}
+.chart{padding:10px 14px 6px}
+.chart svg{width:100%;height:220px;display:block}
+.chart text{fill:var(--faint);font-size:11px}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--muted);padding:0 0 4px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.tbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--line)}
+.tbar h2{font-size:16px;margin:0 8px 0 0;font-weight:600}
+.search{display:flex;align-items:center;border:1px solid var(--line);border-radius:8px;padding:0 10px;min-width:280px}
+.search input{border:0;background:none;padding:7px 4px;outline:none;width:100%}
+.count{margin-left:auto;color:var(--muted);font-size:13px}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:500}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:600}
+.btn.danger{color:var(--red)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:1000px}
+th,td{padding:10px 10px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top;white-space:nowrap}
+th{font-size:12.5px;color:var(--ink);font-weight:600;background:var(--card);position:sticky;top:0;cursor:pointer;user-select:none}
+th.l,td.l{text-align:left}
+th .arr{color:var(--faint);font-size:11px;margin-left:3px}
+tbody tr:hover td{background:var(--hover)}
+td small{display:block;color:var(--muted);font-size:12px}
+.name{font-weight:600;color:var(--ink);background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.name:hover{color:var(--blue);text-decoration:underline}
+.caret{display:inline-block;width:16px;color:var(--faint)}
+tr.type td{background:var(--bg);font-weight:600;font-size:13.5px}
+tr.type small{font-weight:400}
+tr.sub td{background:var(--bg);font-size:13px;color:var(--ink)}
+.dotc{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px}
+.chip{display:inline-flex;align-items:center;gap:5px;margin-right:10px}
+.chip i{display:inline-block;width:7px;height:7px;border-radius:50%}
+tr.sub td.l:first-child{padding-left:12px}
+tr.tot td{font-weight:600;background:var(--bg);border-top:2px solid var(--line)}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:600}
+.pill.live{background:var(--amber-bg);color:var(--amber)} .pill.ended{background:var(--grey-bg);color:var(--grey)}
+.pill.sched{background:var(--sched-bg);color:var(--sched)} .pill.paused{background:var(--red-bg);color:var(--redt)}
+.sw{position:relative;width:34px;height:20px;border-radius:999px;background:var(--line);border:0;cursor:pointer;padding:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .15s}
+.sw[aria-checked="true"]{background:var(--blue)} .sw[aria-checked="true"]::after{left:17px}
+.kebab{border:0;background:none;cursor:pointer;padding:2px 6px;border-radius:6px;color:var(--muted);font-size:18px;line-height:1}
+.kebab:hover{background:var(--hover)}
+.menu{position:absolute;right:16px;background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.12);z-index:6;min-width:170px;padding:4px}
+.menu button{display:block;width:100%;text-align:left;border:0;background:none;padding:8px 10px;border-radius:6px;cursor:pointer}
+.menu button:hover{background:var(--hover)}
+.drawer-bg{position:fixed;inset:0;background:rgba(15,18,25,.35);z-index:10}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--card);z-index:11;display:flex;flex-direction:column;border-left:1px solid var(--line)}
+.drawer header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.drawer header h2{margin:0;font-size:17px}
+.drawer .body{padding:16px 20px;overflow:auto;flex:1}
+.drawer footer{padding:12px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:8px}
+.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted);margin-bottom:12px}
+.f input,.f select{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--card);color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.plrow{border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px}
+.split{font-size:13px;border-top:1px solid var(--line);padding-top:10px;margin-top:6px}
+.split div{display:flex;justify-content:space-between;padding:4px 0}
+.split code{color:var(--muted);font-size:12px}
+.note{color:var(--muted);font-size:12.5px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--card);padding:10px 16px;border-radius:8px;z-index:20}
+.row-h{display:flex;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap}
+.row-h h2{font-size:16px;margin:0;font-weight:600}
+.ptypes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.pt{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-align:left;cursor:pointer;border-top:4px solid var(--pc)}
+.pt:hover{background:var(--hover)}
+.pt[aria-pressed="true"]{outline:2px solid var(--pc);outline-offset:-1px}
+.pt-h{display:flex;justify-content:space-between;align-items:baseline;font-weight:600}
+.pt-h i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--pc);margin-right:7px}
+.pt-h small{color:var(--muted);font-weight:500;font-size:12px}
+.pt-g{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.pt-g div{background:var(--bg);border-radius:8px;padding:7px 9px;min-width:0}
+.pt-g p{margin:0;font-size:11.5px;color:var(--muted)} .pt-g b{font-size:16px}
+@media (max-width:1100px){.ptypes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.box h3{margin:0 0 8px;font-size:14px}
+.empty{padding:32px;text-align:center;color:var(--muted)}
+@media (max-width:900px){ .shell{grid-template-columns:1fr} aside{position:static;height:auto;display:flex;gap:4px;overflow-x:auto;padding:8px} .logo{display:none} aside button{width:auto;white-space:nowrap}
+  .tiles{grid-template-columns:repeat(3,minmax(0,1fr))} .tile:nth-child(3){border-right:0} }
+@media (prefers-reduced-motion:reduce){ .sw::after{transition:none} }
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside>
+    <div class="logo">Ad Manager<span>Secret Sales Retail Media</span></div>
+    <nav aria-label="Main">
+      <button data-view="campaigns" aria-current="page">Campaigns</button>
+      <button data-view="placements">Placements</button>
+      <button data-view="settings">Settings</button>
+    </nav>
+  </aside>
+  <div style="min-width:0">
+    <div class="top" id="top"></div>
+    <main id="app"></main>
+  </div>
+</div>
+<div id="layer"></div>
+
+<script>
+/* ================= Data ================= */
+const KEY='ss-rm-admanager-v3';
+const CH={email:'EM',app:'APP',site:'SITE',ads:'SA'};
+const CHN={email:'Email',app:'App',site:'Site',ads:'Sponsored ads'};
+const CHC={email:'#1F5EFF',app:'#0E9F7E',site:'#C2367A',ads:'#B26A00'};
+function seed(){
+  return {
+    next:146, attributionDays:14,
+    markets:[
+      {code:'UK',name:'Secret Sales UK',currency:'GBP',mult:1,scale:1},
+      {code:'VD',name:'V&D',currency:'EUR',mult:0.65,scale:0.18},
+      {code:'TBD',name:'To Be Dressed',currency:'EUR',mult:0.6,scale:0.10},
+      {code:'DE',name:'Dress For Less',currency:'EUR',mult:0.6,scale:0.15}],
+    rateCard:[
+      {id:'em_block',channel:'email',type:'Email block',unit:'send',gbp:2000},
+      {id:'em_solus',channel:'email',type:'Solus email',unit:'send',gbp:3000},
+      {id:'app_push',channel:'app',type:'App push',unit:'send',gbp:1500},
+      {id:'app_cat',channel:'app',type:'App category week',unit:'week',gbp:1000},
+      {id:'site_cat',channel:'site',type:'Category week slot',unit:'week',gbp:3500},
+      {id:'site_rail',channel:'site',type:'Recommendation rail',unit:'week',gbp:2500},
+      {id:'site_banner',channel:'site',type:'Banner placement',unit:'week',gbp:3000},
+      {id:'site_plp',channel:'site',type:'PLP promoted products',unit:'week',gbp:2000},
+      {id:'ads_week',channel:'ads',type:'Sponsored ads',unit:'week',gbp:500}],
+    fx:[{month:'2026-09',eurPerGbp:1.15},{month:'2026-10',eurPerGbp:1.15},{month:'2026-11',eurPerGbp:1.15},{month:'2026-12',eurPerGbp:1.16},{month:'2027-01',eurPerGbp:1.16}],
+    deals:[
+      mk(136,'Back To School Beauty','Scent Warehouse','UK',6000,[['em_block','2026-09-03'],['site_cat','2026-09-07','2026-09-13'],['app_push','2026-09-10'],['ads_week','2026-09-01','2026-09-28']]),
+      mk(137,'Autumn Shoes Takeover','Clarks Shoes','UK',7500,[['em_solus','2026-09-24'],['site_banner','2026-09-28','2026-10-04']]),
+      mk(138,'Women\u2019s New Season','Izabel London','UK',6950,[['site_cat','2026-09-15','2026-09-28']]),
+      mk(139,'Fall 2026 Multi Sites','Watch & Watch','UK',8000,[['em_block','2026-10-08'],['site_rail','2026-10-12','2026-10-25'],['app_push','2026-10-16'],['ads_week','2026-09-21','2026-10-31']]),
+      mk(140,'October Denim Push','Raw Indigo','UK',5000,[['site_plp','2026-10-05','2026-10-18'],['em_block','2026-10-14'],['ads_week','2026-10-01','2026-10-28']]),
+      mk(141,'Peak 2026 Gold','Scent Warehouse','UK',15000,[['em_block','2026-11-27'],['em_block','2026-12-04'],['app_push','2026-11-28'],['app_push','2026-12-10'],['site_cat','2026-11-23','2026-11-29'],['site_rail','2026-12-07','2026-12-13'],['ads_week','2026-10-19','2027-01-31']]),
+      mk(142,'Peak 2026 Bronze','ASOS','UK',8000,[['em_block','2026-11-20'],['em_solus','2026-11-27'],['app_push','2026-11-29'],['site_banner','2026-12-01','2026-12-07']]),
+      mk(143,'Black Friday DE','Golden Brands','DE',11500,[['em_block','2026-11-26'],['em_block','2026-12-03'],['site_cat','2026-11-23','2026-11-29']]),
+      mk(144,'Peak NL Gold','Van de Belt','VD',7400,[['em_solus','2026-11-27'],['em_block','2026-12-05'],['site_cat','2026-12-01','2026-12-07']]),
+      mk(145,'Peak 2026 Silver','Kurt Geiger','UK',11000,[['em_block','2026-10-22'],['em_block','2026-11-19'],['app_push','2026-11-27'],['site_plp','2026-11-16','2026-11-29'],['ads_week','2026-10-12','2026-12-27']])
+    ]};
+}
+function mk(n,name,partner,market,price,pls){ return {id:String(n).padStart(4,'0'),name,partner,market,price,currency:market==='UK'?'GBP':'EUR',on:true,
+  placements:pls.map(p=>({rate:p[0],start:p[1],end:p[2]||p[1]}))}; }
+let S; try{ S=JSON.parse(localStorage.getItem(KEY))||seed(); }catch(e){ S=seed(); }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} cache.clear(); }
+
+/* ================= Helpers ================= */
+const $=(s,el=document)=>el.querySelector(s), $$=(s,el=document)=>[...el.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const D=s=>new Date(s+'T00:00:00Z'), iso=d=>d.toISOString().slice(0,10);
+const addDays=(s,n)=>{const d=D(s);d.setUTCDate(d.getUTCDate()+n);return iso(d);};
+const diff=(a,b)=>Math.round((D(b)-D(a))/864e5);
+const TODAY=iso(new Date());
+const market=c=>S.markets.find(m=>m.code===c)||{code:c,name:c,currency:'GBP',mult:1,scale:.1};
+const rate=id=>S.rateCard.find(r=>r.id===id);
+function fx(d){ const m=d.slice(0,7); const l=[...S.fx].sort((a,b)=>a.month.localeCompare(b.month)); let r=l[0]?.eurPerGbp||1.15; for(const f of l) if(f.month<=m) r=f.eurPerGbp; return r; }
+function conv(v,from,to,d){ if(from===to) return v; const r=fx(d); const g=from==='GBP'?v:v/r; return to==='GBP'?g:g*r; }
+const sym=c=>c==='EUR'?'€':'£';
+const money=(v,c)=>sym(c)+v.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+const moneyK=(v,c)=>{const a=Math.abs(v); return a>=1e6?sym(c)+(v/1e6).toFixed(2)+'M':a>=1e4?sym(c)+(v/1e3).toFixed(1)+'k':money(v,c);};
+const int=v=>Math.round(v).toLocaleString('en-GB');
+const kint=v=>{const a=Math.abs(v); return a>=1e6?(v/1e6).toFixed(2)+'M':a>=1e4?(v/1e3).toFixed(1)+'k':int(v);};
+const pct=(a,b)=>b?(a/b*100).toFixed(2)+'%':'-';
+const roasT=(s,c)=>c?(s/c).toFixed(1)+' ROAS':'- ROAS';
+const acosT=(s,c)=>s?(c/s*100).toFixed(2)+'%':'-';
+
+/* ================= Deal logic ================= */
+const units=p=>{const r=rate(p.rate); return r&&r.unit==='week'?Math.max(1,Math.ceil((diff(p.start,p.end)+1)/7)):1;};
+const rv=(p,m)=>{const r=rate(p.rate); return r?r.gbp*units(p)*(m.mult||1):0;};
+function enrich(d){
+  const m=market(d.market); const tot=d.placements.reduce((s,p)=>s+rv(p,m),0)||1;
+  return d.placements.map((p,i)=>{ const r=rate(p.rate)||{channel:'site',type:'Unknown',unit:'week'};
+    return {...p,channel:r.channel,type:r.type,unit:r.unit,trackingId:`RM-${d.market}-${CH[r.channel]}-${d.id}-${String(i+1).padStart(2,'0')}`,allocated:d.price*rv(p,m)/tot}; });
+}
+
+/* ================= Dummy performance ================= */
+function rng(s){ let h=1779033703^s.length; for(let i=0;i<s.length;i++){h=Math.imul(h^s.charCodeAt(i),3432918353);h=h<<13|h>>>19;}
+  return ()=>{h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);h^=h>>>16;return (h>>>0)/4294967296;}; }
+const PROF={email:{imp:[60000,200000],ctr:[.018,.032]},app:{imp:[20000,90000],ctr:[.03,.05]},site:{imp:[15000,40000],ctr:[.01,.025]},ads:{imp:[9000,16000],ctr:[.005,.009]}};
+const cache=new Map();
+function daily(d,p){
+  const k=[p.trackingId,p.start,p.end,d.price,S.attributionDays,d.market,JSON.stringify(market(d.market))].join('|');
+  if(cache.has(k)) return cache.get(k);
+  const r=rng(p.trackingId), m=market(d.market), pr=PROF[p.channel]; const b=(x,y)=>x+(y-x)*r();
+  const live=Math.max(1,diff(p.start,p.end)+1), aov=b(38,85)*(d.currency==='EUR'?1.1:1);
+  const ctr=b(...pr.ctr), vr=b(1.3,1.9), ar=b(.06,.11), or=b(.28,.42);
+  const W=S.attributionDays, w=[]; let ws=0; for(let i=0;i<=W;i++){const x=Math.pow(.5,i/2); w.push(x); ws+=x;}
+  const rows={}; const g=x=>rows[x]||(rows[x]={imp:0,clk:0,ord:0,sales:0,spend:0});
+  for(let i=0;i<live;i++){ const day=addDays(p.start,i);
+    const imp=b(...pr.imp)*m.scale*(p.channel==='site'||p.channel==='ads'?1:1/live), clk=imp*ctr, ord=clk*vr*ar*or;
+    const t=g(day); t.imp+=imp; t.clk+=clk; t.spend+=p.allocated/live;
+    w.forEach((x,j)=>{const u=g(addDays(day,j)); u.ord+=ord*x/ws; u.sales+=ord*aov*x/ws;}); }
+  cache.set(k,rows); return rows;
+}
+const Z=()=>({imp:0,clk:0,ord:0,sales:0,spend:0});
+const add=(a,b)=>{for(const k in b) a[k]+=b[k]; return a;};
+function metrics(d,p){ const rows=daily(d,p), m=Z();
+  for(const day in rows){ if(day<F.from||day>F.to||day>TODAY) continue; const x=rows[day];
+    m.imp+=x.imp; m.clk+=x.clk; m.ord+=x.ord; m.sales+=conv(x.sales,d.currency,F.cur,day); m.spend+=conv(x.spend,d.currency,F.cur,day); }
+  return m; }
+function inScope(d){ return F.market==='ALL'||d.market===F.market; }
+function status(d,pl){ if(!d.on) return ['Paused','paused'];
+  if(pl.some(p=>p.start<=TODAY&&TODAY<=p.end)) return ['Delivering','live'];
+  if(pl.some(p=>p.start>TODAY)) return ['Scheduled','sched']; return ['Ended','ended']; }
+function pstatus(d,p){ if(!d.on) return ['Paused','paused']; return p.start<=TODAY&&TODAY<=p.end?['Delivering','live']:p.start>TODAY?['Scheduled','sched']:['Ended','ended']; }
+
+/* ================= State & shell ================= */
+let view='campaigns';
+const F={from:'2026-09-01',to:TODAY,market:'ALL',cur:'GBP',q:'',st:'all',sort:'sales',dir:-1,tiles:['spend','sales'],open:new Set(),ptype:''};
+$$('aside nav button').forEach(b=>b.onclick=()=>{view=b.dataset.view; $$('aside nav button').forEach(x=>x.removeAttribute('aria-current')); b.setAttribute('aria-current','page'); render();});
+const PRESETS=[['Peak (Oct to Jan)','2026-10-01','2027-01-31'],['Last 30 days',addDays(TODAY,-29),TODAY],['Last 7 days',addDays(TODAY,-6),TODAY],['September','2026-09-01','2026-09-30'],['October','2026-10-01','2026-10-31'],['November','2026-11-01','2026-11-30'],['December','2026-12-01','2026-12-31'],['Black Friday week','2026-11-23','2026-11-30'],['All time','2026-01-01','2027-12-31']];
+function renderTop(){
+  const titles={campaigns:'Campaigns',placements:'Placements',settings:'Settings'};
+  $('#top').innerHTML=`<h1>${titles[view]}</h1>${view==='settings'?'':`
+    <select class="ctl" id="t-mk" aria-label="Market"><option value="ALL">All markets</option>${S.markets.map(m=>`<option value="${m.code}" ${F.market===m.code?'selected':''}>${esc(m.name)}</option>`).join('')}</select>
+    <select class="ctl" id="t-pre" aria-label="Date range preset"><option value="">Custom range</option>${PRESETS.map((p,i)=>`<option value="${i}" ${F.from===p[1]&&F.to===p[2]?'selected':''}>${p[0]}</option>`).join('')}</select>
+    <input class="ctl" type="date" id="t-from" value="${F.from}" aria-label="From">
+    <input class="ctl" type="date" id="t-to" value="${F.to}" aria-label="To">
+    <div class="seg" role="group" aria-label="Currency">${['GBP','EUR'].map(c=>`<button data-cur="${c}" aria-pressed="${F.cur===c}">${sym(c)}</button>`).join('')}</div>`}`;
+  if(view==='settings') return;
+  $('#t-mk').onchange=e=>{F.market=e.target.value; render();};
+  $('#t-pre').onchange=e=>{ if(e.target.value==='') return; const p=PRESETS[+e.target.value]; F.from=p[1]; F.to=p[2]; render(); };
+  $('#t-from').onchange=e=>{F.from=e.target.value; render();};
+  $('#t-to').onchange=e=>{F.to=e.target.value; render();};
+  $$('[data-cur]').forEach(b=>b.onclick=()=>{F.cur=b.dataset.cur; render();});
+}
+function render(){ renderTop(); ({campaigns:renderCampaigns,placements:renderPlacements,settings:renderSettings})[view](); }
+
+/* ================= Campaigns ================= */
+const TILES={spend:['Ad spend',(m,c)=>moneyK(m.spend,c)],imp:['Impressions',m=>kint(m.imp)],clk:['Clicks',m=>kint(m.clk)],
+  sales:['Sales revenue',(m,c)=>moneyK(m.sales,c)],ord:['Conversions',m=>int(m.ord)],roas:['ROAS',m=>m.spend?(m.sales/m.spend).toFixed(2):'-']};
+function rowsData(){
+  return S.deals.filter(inScope).map(d=>{ const pl=enrich(d).filter(p=>!F.ptype||p.channel===F.ptype); if(!pl.length) return null; const ps=pl.map(p=>({p,m:metrics(d,p)}));
+    const budget=conv(d.price,d.currency,F.cur,pl[0]?.start||TODAY);
+    const bud = F.ptype ? pl.reduce((t,p)=>t+conv(p.allocated,d.currency,F.cur,p.start),0) : budget;
+    return {d,pl,ps,m:ps.reduce((a,x)=>add(a,x.m),Z()),budget:bud,st:status(d,pl)}; }).filter(Boolean);
+}
+function series(){
+  const days=[]; for(let x=F.from;x<=F.to&&days.length<800;x=addDays(x,1)) days.push(x);
+  const map=Object.fromEntries(days.map(x=>[x,Z()]));
+  for(const d of S.deals.filter(inScope)) for(const p of enrich(d)){ if(F.ptype&&p.channel!==F.ptype) continue; const r=daily(d,p);
+    for(const day in r){ if(!map[day]||day>TODAY) continue; const x=r[day], t=map[day]; t.imp+=x.imp; t.clk+=x.clk; t.ord+=x.ord; t.sales+=conv(x.sales,d.currency,F.cur,day); t.spend+=conv(x.spend,d.currency,F.cur,day); } }
+  return days.map(x=>({day:x,...map[x]}));
+}
+function val(k,m){ return k==='roas'?(m.spend?m.sales/m.spend:0):m[k]; }
+function chartSVG(){
+  const s=series(); if(s.length<2) return '<p class="note" style="padding:20px">Pick a longer date range to see the chart.</p>';
+  const W=800,H=220,L=48,R=48,T=12,B=26; const sel=F.tiles;
+  const lines=sel.map((k,i)=>{ const ys=s.map(x=>val(k,x)); const mx=Math.max(...ys)||1;
+    const pts=ys.map((y,j)=>`${(L+(W-L-R)*j/(s.length-1)).toFixed(1)},${(T+(H-T-B)*(1-y/mx)).toFixed(1)}`).join(' ');
+    const sh=v=>v>=1e6?(v/1e6).toFixed(1)+'M':v>=1e3?(v/1e3).toFixed(1)+'k':Math.round(v)+''; const fmt=v=>k==='spend'||k==='sales'?sym(F.cur)+sh(v):k==='roas'?v.toFixed(1):sh(v);
+    const axis=[0,.5,1].map(f=>`<text x="${i===0?L-6:W-R+6}" y="${(T+(H-T-B)*(1-f)+4).toFixed(1)}" text-anchor="${i===0?'end':'start'}">${fmt(mx*f)}</text>`).join('');
+    return `<polyline fill="none" stroke="var(--c${i+1})" stroke-width="2" points="${pts}"/>${axis}`; }).join('');
+  const grid=[0,.5,1].map(f=>`<line x1="${L}" x2="${W-R}" y1="${T+(H-T-B)*f}" y2="${T+(H-T-B)*f}" stroke="var(--line)"/>`).join('');
+  const ticks=[0,.25,.5,.75,1].map(f=>{ const j=Math.round((s.length-1)*f); const d=D(s[j].day);
+    return `<text x="${L+(W-L-R)*j/(s.length-1)}" y="${H-6}" text-anchor="middle">${d.getUTCDate()} ${d.toLocaleString('en-GB',{month:'short',timeZone:'UTC'})}</text>`; }).join('');
+  const today=s.findIndex(x=>x.day===TODAY); const tl=today>0?`<line x1="${L+(W-L-R)*today/(s.length-1)}" x2="${L+(W-L-R)*today/(s.length-1)}" y1="${T}" y2="${H-B}" stroke="var(--faint)" stroke-dasharray="3 3"/><text x="${L+(W-L-R)*today/(s.length-1)-4}" y="${H-B-6}" text-anchor="end">Today</text>`:'';
+  return `<div class="legend">${sel.map((k,i)=>`<span><i style="background:var(--c${i+1})"></i>${TILES[k][0]}</span>`).join('')}</div>
+    <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Daily ${sel.map(k=>TILES[k][0]).join(' and ')}">${grid}${tl}${lines}${ticks}</svg>`;
+}
+const COLS=[['name','Campaign name','l'],['partner','On behalf of','l'],['status','Status','l'],['budget','Budget'],['spend','Ad spend'],['imp','Impressions'],['clk','Clicks'],['cpc','CPC'],['acos','ACoS'],['sales','Sales revenue']];
+function sortVal(r,k){ const m=r.m; return {name:r.d.name.toLowerCase(),partner:r.d.partner.toLowerCase(),status:r.st[0],budget:r.budget,spend:m.spend,imp:m.imp,clk:m.clk,cpc:m.clk?m.spend/m.clk:0,acos:m.sales?m.spend/m.sales:9e9,sales:m.sales}[k]; }
+function cells(m,c){ return `<td>${money(m.spend,c)}</td><td>${int(m.imp)}</td><td>${int(m.clk)}<small>${pct(m.clk,m.imp)} CTR</small></td>
+  <td>${m.clk?money(m.spend/m.clk,c):'-'}</td><td>${acosT(m.sales,m.spend)}<small>${roasT(m.sales,m.spend)}</small></td>
+  <td>${money(m.sales,c)}<small>${int(m.ord)} conversions</small></td>`; }
+function renderCampaigns(){
+  const all=rowsData(); const tot=all.reduce((a,r)=>add(a,r.m),Z()); const c=F.cur;
+  let rows=all.filter(r=>(r.d.name+' '+r.d.partner).toLowerCase().includes(F.q.toLowerCase()) && (F.st==='all'||r.st[1]===F.st));
+  rows.sort((a,b)=>{const A=sortVal(a,F.sort),B=sortVal(b,F.sort); return (A<B?-1:A>B?1:0)*F.dir;});
+  const ft=rows.reduce((a,r)=>add(a,r.m),Z()), fb=rows.reduce((s,r)=>s+r.budget,0);
+  $('#app').innerHTML=`<div class="panel" style="margin-bottom:16px">
+      <div class="tiles">${Object.keys(TILES).map(k=>{ const i=F.tiles.indexOf(k); return `<button class="tile" data-tile="${k}" aria-pressed="${i>-1}" style="${i>-1?`border-top-color:var(--c${i+1})`:''}"><div class="l">${TILES[k][0]}</div><div class="v">${TILES[k][1](tot,c)}</div></button>`; }).join('')}</div>
+      <div class="chart">${chartSVG()}</div></div>
+    <div class="panel">
+      <div class="tbar"><h2>Campaigns</h2>
+        <label class="search"><span aria-hidden="true" style="color:var(--faint)">⌕</span><input id="q" type="search" placeholder="Search by name or partner" value="${esc(F.q)}"></label>
+        <select class="ctl" id="st" aria-label="Status filter">${[['all','All statuses'],['live','Delivering'],['sched','Scheduled'],['ended','Ended'],['paused','Paused']].map(o=>`<option value="${o[0]}" ${F.st===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select>
+        <span class="count">${rows.length} results</span>
+        <button class="btn" id="dl">Download</button>
+        <button class="btn primary" id="new">Create campaign</button></div>
+      <div class="tw"><table>
+        <thead><tr><th class="l" style="width:56px;cursor:default">On/off</th>${COLS.map(([k,l,a])=>`<th class="${a||''}" data-sort="${k}">${l}<span class="arr">${F.sort===k?(F.dir<0?'▼':'▲'):''}</span></th>`).join('')}<th style="cursor:default"></th></tr></thead>
+        <tbody>${rows.length?rows.map(r=>{ const open=F.open.has(r.d.id); return `<tr>
+            <td class="l"><button class="sw" role="switch" aria-checked="${r.d.on}" aria-label="${r.d.on?'Pause':'Enable'} ${esc(r.d.name)}" data-tog="${r.d.id}"></button></td>
+            <td class="l"><button class="name" data-open="${r.d.id}" aria-expanded="${open}"><span class="caret">${open?'▾':'▸'}</span>${esc(r.d.name)}</button><small style="padding-left:16px">${Object.keys(CHN).filter(k=>r.pl.some(p=>p.channel===k)).map(k=>`<span class="chip"><i style="background:${CHC[k]}"></i>${CHN[k]}</span>`).join('')}</small></td>
+            <td class="l">${esc(r.d.partner)}<small>${esc(market(r.d.market).name)}</small></td>
+            <td class="l"><span class="pill ${r.st[1]}">${r.st[0]}</span></td>
+            <td>${money(r.budget,c)}<small>Total</small></td>${cells(r.m,c)}
+            <td><button class="kebab" data-menu="${r.d.id}" aria-label="More actions for ${esc(r.d.name)}">⋮</button></td></tr>
+          ${open?Object.keys(CHN).filter(k=>r.ps.some(x=>x.p.channel===k)).map(k=>{ const g=r.ps.filter(x=>x.p.channel===k);
+            const gm=g.reduce((t,x)=>add(t,x.m),Z()); const ga=g.reduce((t,x)=>t+conv(x.p.allocated,r.d.currency,c,x.p.start),0);
+            const gst=status(r.d,g.map(x=>x.p));
+            return `<tr class="type"><td></td>
+              <td class="l" style="padding-left:28px"><span class="dotc" style="background:${CHC[k]}"></span>${CHN[k]}<small style="padding-left:16px">${g.length} placement${g.length===1?'':'s'}</small></td>
+              <td class="l"></td><td class="l"><span class="pill ${gst[1]}">${gst[0]}</span></td>
+              <td>${money(ga,c)}<small>Allocated</small></td>${cells(gm,c)}<td></td></tr>`
+            + g.map(({p,m})=>{ const ps=pstatus(r.d,p); return `<tr class="sub"><td></td>
+              <td class="l" style="padding-left:46px">${esc(p.type)}<small>${p.trackingId}</small></td>
+              <td class="l">${p.start===p.end?p.start:p.start+' to '+p.end}</td>
+              <td class="l"><span class="pill ${ps[1]}">${ps[0]}</span></td>
+              <td>${money(conv(p.allocated,r.d.currency,c,p.start),c)}<small>Allocated</small></td>${cells(m,c)}<td></td></tr>`; }).join(''); }).join(''):''}`; }).join('')
+          :`<tr><td colspan="12" class="empty">No campaigns match. Clear the search or status filter.</td></tr>`}
+        </tbody>
+        ${rows.length?`<tfoot><tr class="tot"><td></td><td class="l">Total: ${rows.length} campaigns</td><td></td><td></td><td>${money(fb,c)}</td>${cells(ft,c)}<td></td></tr></tfoot>`:''}
+      </table></div></div>
+    <p class="note" style="margin-top:10px">Dummy data. Sales are orders of the partner's products within ${S.attributionDays} days of a click, credited to the last placement clicked. Budget is the deal price. Ad spend is the budget spread across the live days in the date range, up to today.</p>`;
+  $$('[data-tile]').forEach(b=>b.onclick=()=>{ const k=b.dataset.tile; const i=F.tiles.indexOf(k);
+    if(i>-1){ if(F.tiles.length>1) F.tiles.splice(i,1); } else { F.tiles.push(k); if(F.tiles.length>2) F.tiles.shift(); } renderCampaigns(); });
+  const q=$('#q'); q.oninput=e=>{F.q=e.target.value; const pos=e.target.selectionStart; renderCampaigns(); const n=$('#q'); n.focus(); n.setSelectionRange(pos,pos);};
+  $('#st').onchange=e=>{F.st=e.target.value; renderCampaigns();};
+  $$('[data-sort]').forEach(th=>th.onclick=()=>{ const k=th.dataset.sort; if(F.sort===k) F.dir*=-1; else {F.sort=k; F.dir=['name','partner','status','acos','cpc'].includes(k)?1:-1;} renderCampaigns(); });
+  $$('[data-open]').forEach(b=>b.onclick=()=>{ const id=b.dataset.open; F.open.has(id)?F.open.delete(id):F.open.add(id); renderCampaigns(); });
+  $$('[data-tog]').forEach(b=>b.onclick=()=>{ const d=S.deals.find(x=>x.id===b.dataset.tog); d.on=!d.on; save(); toast(`${d.name} ${d.on?'enabled':'paused'}`); renderCampaigns(); });
+  $$('[data-menu]').forEach(b=>b.onclick=e=>{ e.stopPropagation(); openMenu(b); });
+  $('#dl').onclick=()=>downloadCampaigns(rows);
+
+  $('#new').onclick=()=>openDrawer();
+}
+function openMenu(btn){
+  closeMenu(); const d=S.deals.find(x=>x.id===btn.dataset.menu); const r=btn.getBoundingClientRect();
+  const m=document.createElement('div'); m.className='menu'; m.id='menu'; m.style.top=(r.bottom+window.scrollY+4)+'px'; m.style.position='absolute';
+  m.innerHTML=`<button data-a="ids">Copy tracking IDs</button><button data-a="toggle">${d.on?'Pause campaign':'Enable campaign'}</button><button data-a="del" class="danger" style="color:var(--red)">Delete campaign</button>`;
+  document.body.appendChild(m);
+  m.querySelector('[data-a=ids]').onclick=()=>{ const t=enrich(d).map(p=>`${p.trackingId}\t${p.type}\t${p.start}`).join('\n'); (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Tracking IDs copied')).catch(()=>toast('Copy failed: open the campaign to see its IDs')); closeMenu(); };
+  m.querySelector('[data-a=toggle]').onclick=()=>{ d.on=!d.on; save(); closeMenu(); toast(`${d.name} ${d.on?'enabled':'paused'}`); render(); };
+  m.querySelector('[data-a=del]').onclick=()=>{ closeMenu(); if(!confirm(`Delete "${d.name}"? This cannot be undone.`)) return; S.deals=S.deals.filter(x=>x!==d); save(); toast('Campaign deleted'); render(); };
+  setTimeout(()=>document.addEventListener('click',closeMenu,{once:true}));
+}
+function closeMenu(){ $('#menu')?.remove(); }
+function toast(t){ const el=document.createElement('div'); el.className='toast'; el.setAttribute('role','status'); el.textContent=t; document.body.appendChild(el); setTimeout(()=>el.remove(),2200); }
+function csv(lines,kind){ const blob=new Blob([lines.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n')],{type:'text/csv'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`ad-manager_${kind}${F.ptype?'_'+F.ptype:''}_${F.from}_to_${F.to}_${F.cur}.csv`; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
+function downloadCampaigns(rows){ const c=F.cur;
+  csv([['campaign','deal_id','partner','market','status','budget_'+c,'ad_spend_'+c,'impressions','clicks','ctr','cpc_'+c,'acos','roas','sales_'+c,'conversions'],
+    ...rows.map(r=>{const m=r.m; return [r.d.name,r.d.id,r.d.partner,market(r.d.market).name,r.st[0],r.budget.toFixed(2),m.spend.toFixed(2),Math.round(m.imp),Math.round(m.clk),m.imp?(m.clk/m.imp).toFixed(4):'',m.clk?(m.spend/m.clk).toFixed(2):'',m.sales?(m.spend/m.sales).toFixed(4):'',m.spend?(m.sales/m.spend).toFixed(2):'',m.sales.toFixed(2),Math.round(m.ord)];})],'campaigns'); }
+
+/* ================= Placements ================= */
+function renderPlacements(){
+  const c=F.cur; let rows=[];
+  for(const d of S.deals.filter(inScope)) for(const p of enrich(d)) rows.push({d,p,m:metrics(d,p),st:pstatus(d,p)});
+  rows=rows.filter(r=>(r.p.type+' '+r.d.name+' '+r.d.partner+' '+r.p.trackingId).toLowerCase().includes(F.q.toLowerCase()));
+  rows.sort((a,b)=>b.m.sales-a.m.sales); const ft=rows.reduce((a,r)=>add(a,r.m),Z());
+  $('#app').innerHTML=`<div class="panel"><div class="tbar"><h2>Placements</h2>
+      <label class="search"><span aria-hidden="true" style="color:var(--faint)">⌕</span><input id="q" type="search" placeholder="Search placement, partner or tracking ID" value="${esc(F.q)}"></label>
+      <span class="count">${rows.length} results</span><button class="btn" id="dl">Download</button></div>
+    <div class="tw"><table><thead><tr><th class="l">Placement</th><th class="l">Campaign</th><th class="l">Status</th><th>Allocated</th><th>Ad spend</th><th>Impressions</th><th>Clicks</th><th>CPC</th><th>ACoS</th><th>Sales revenue</th></tr></thead>
+    <tbody>${rows.map(r=>`<tr><td class="l">${esc(r.p.type)}<small>${r.p.trackingId}</small></td><td class="l">${esc(r.d.name)}<small>${esc(r.d.partner)} · ${r.p.start===r.p.end?r.p.start:r.p.start+' to '+r.p.end}</small></td>
+      <td class="l"><span class="pill ${r.st[1]}">${r.st[0]}</span></td><td>${money(conv(r.p.allocated,r.d.currency,c,r.p.start),c)}</td>${cells(r.m,c)}</tr>`).join('')||`<tr><td colspan="10" class="empty">No placements match.</td></tr>`}</tbody>
+    ${rows.length?`<tfoot><tr class="tot"><td class="l">Total: ${rows.length} placements</td><td></td><td></td><td></td>${cells(ft,c)}</tr></tfoot>`:''}</table></div></div>`;
+  const q=$('#q'); q.oninput=e=>{F.q=e.target.value; const pos=e.target.selectionStart; renderPlacements(); const n=$('#q'); n.focus(); n.setSelectionRange(pos,pos);};
+  $('#dl').onclick=()=>csv([['placement','tracking_id','campaign','partner','market','start','end','status','allocated_'+c,'ad_spend_'+c,'impressions','clicks','cpc_'+c,'acos','roas','sales_'+c,'conversions'],
+    ...rows.map(r=>{const m=r.m; return [r.p.type,r.p.trackingId,r.d.name,r.d.partner,market(r.d.market).name,r.p.start,r.p.end,r.st[0],conv(r.p.allocated,r.d.currency,c,r.p.start).toFixed(2),m.spend.toFixed(2),Math.round(m.imp),Math.round(m.clk),m.clk?(m.spend/m.clk).toFixed(2):'',m.sales?(m.spend/m.sales).toFixed(4):'',m.spend?(m.sales/m.spend).toFixed(2):'',m.sales.toFixed(2),Math.round(m.ord)];})],'placements');
+}
+
+/* ================= Create campaign drawer ================= */
+let draft=null;
+function openDrawer(){ draft={name:'',partner:'',market:S.markets[0].code,price:'',placements:[{rate:S.rateCard[0].id,start:addDays(TODAY,7),end:addDays(TODAY,7)}]}; drawDrawer(); }
+function closeDrawer(){ $('#layer').innerHTML=''; draft=null; }
+function drawDrawer(){
+  const m=market(draft.market), cur=m.currency, id=String(S.next).padStart(4,'0');
+  $('#layer').innerHTML=`<div class="drawer-bg" id="dbg"></div><div class="drawer" role="dialog" aria-modal="true" aria-labelledby="dt">
+    <header><h2 id="dt">Create campaign</h2><button class="kebab" id="dx" aria-label="Close">×</button></header>
+    <div class="body">
+      <label class="f">Campaign name<input id="c-name" value="${esc(draft.name)}" placeholder="e.g. Peak 2026 Gold"></label>
+      <div class="two"><label class="f">On behalf of<input id="c-partner" value="${esc(draft.partner)}" placeholder="Partner name"></label>
+        <label class="f">Market<select id="c-market">${S.markets.map(x=>`<option value="${x.code}" ${x.code===draft.market?'selected':''}>${esc(x.name)}</option>`).join('')}</select></label></div>
+      <label class="f">Budget, total deal price (${cur})<input id="c-price" type="number" min="0" step="50" value="${esc(draft.price)}" placeholder="10000"></label>
+      <p class="note" style="margin:4px 0 8px">Placements</p>
+      ${draft.placements.map((p,i)=>{ const r=rate(p.rate)||{}; return `<div class="plrow" data-i="${i}">
+        <label class="f">Placement<select data-k="rate">${Object.keys(CHN).map(ch=>`<optgroup label="${CHN[ch]}">${S.rateCard.filter(x=>x.channel===ch).map(x=>`<option value="${x.id}" ${x.id===p.rate?'selected':''}>${esc(x.type)}</option>`).join('')}</optgroup>`).join('')}</select></label>
+        <div class="two"><label class="f">${r.unit==='send'?'Send date':'Start'}<input type="date" data-k="start" value="${p.start}"></label>
+        ${r.unit==='send'?'<div></div>':`<label class="f">End<input type="date" data-k="end" value="${p.end}"></label>`}</div>
+        ${draft.placements.length>1?`<button class="btn danger" data-rm="${i}">Remove placement</button>`:''}</div>`; }).join('')}
+      <button class="btn" id="c-add">Add placement</button>
+      <div id="c-split"></div>
+    </div>
+    <footer><button class="btn" id="c-cancel">Cancel</button><button class="btn primary" id="c-save">Create campaign</button></footer></div>`;
+  const upd=()=>{ const ready=+draft.price>0&&draft.placements.length;
+    const pl=ready?enrich({id,market:draft.market,price:+draft.price,placements:draft.placements}):[];
+    const rcv=conv(draft.placements.reduce((s,p)=>s+rv(p,m),0),'GBP',cur,draft.placements[0]?.start||TODAY);
+    $('#c-split').innerHTML=pl.length?`<div class="split"><p class="note" style="margin:0 0 4px">Budget split by rate card (${pct(+draft.price,rcv)} of rate card value ${money(rcv,cur)})</p>
+      ${pl.map(p=>`<div><span>${esc(p.type)}<br><code>${p.trackingId}</code></span><b>${money(p.allocated,cur)}</b></div>`).join('')}</div>`:`<p class="note" style="margin-top:12px">Enter a budget to see how it splits and the tracking IDs.</p>`;
+    const ok=ready&&draft.name.trim()&&draft.partner.trim(); const b=$('#c-save'); b.disabled=!ok; b.style.opacity=ok?1:.5; };
+  $('#c-name').oninput=e=>{draft.name=e.target.value; upd();};
+  $('#c-partner').oninput=e=>{draft.partner=e.target.value; upd();};
+  $('#c-price').oninput=e=>{draft.price=e.target.value; upd();};
+  $('#c-market').onchange=e=>{draft.market=e.target.value; drawDrawer();};
+  $$('.plrow').forEach(el=>{ const i=+el.dataset.i; $$('[data-k]',el).forEach(inp=>inp.onchange=e=>{ const p=draft.placements[i]; p[inp.dataset.k]=e.target.value; const r=rate(p.rate);
+    if(r&&r.unit==='send') p.end=p.start; else if(p.end<=p.start) p.end=addDays(p.start,6); drawDrawer(); }); });
+  $$('[data-rm]').forEach(b=>b.onclick=()=>{draft.placements.splice(+b.dataset.rm,1); drawDrawer();});
+  $('#c-add').onclick=()=>{draft.placements.push({rate:S.rateCard[0].id,start:addDays(TODAY,7),end:addDays(TODAY,7)}); drawDrawer();};
+  $('#dx').onclick=$('#c-cancel').onclick=$('#dbg').onclick=closeDrawer;
+  $('#c-save').onclick=()=>{ if($('#c-save').disabled) return;
+    S.deals.push({id,name:draft.name.trim(),partner:draft.partner.trim(),market:draft.market,price:+draft.price,currency:cur,on:true,placements:draft.placements.map(p=>({...p}))});
+    S.next++; save(); const n=draft.name.trim(); closeDrawer(); toast(`${n} created`); render(); };
+  upd(); $('#c-name').focus();
+  document.onkeydown=e=>{ if(e.key==='Escape'&&draft) closeDrawer(); };
+}
+
+/* ================= Settings ================= */
+function renderSettings(){
+  $('#app').innerHTML=`<div class="grid">
+    <div class="box"><h3>Attribution window</h3><p class="note">Days after a click in which an order still counts.</p><label class="f">Days<input type="number" min="1" max="60" id="s-attr" value="${S.attributionDays}"></label></div>
+    <div class="box"><h3>Exchange rates</h3><p class="note">Fixed monthly rate, euros per £1.</p>
+      ${S.fx.map((f,i)=>`<label class="f">${f.month}<input type="number" step="0.01" data-fx="${i}" value="${f.eurPerGbp}"></label>`).join('')}
+      <div class="two"><label class="f">Month<input id="fx-m" type="month"></label><label class="f">€ per £1<input id="fx-r" type="number" step="0.01"></label></div><button class="btn" id="fx-add">Add month</button></div>
+  </div>
+  <h2 style="font-size:16px;margin:24px 0 10px">Markets</h2>
+  <div class="grid">${S.markets.map((m,i)=>`<div class="box"><h3>${esc(m.name)} <span class="note">${esc(m.code)}</span></h3>
+      <label class="f">Currency<select data-mk="${i}" data-f="currency">${['GBP','EUR'].map(c=>`<option ${m.currency===c?'selected':''}>${c}</option>`).join('')}</select></label>
+      <label class="f">Rate card multiplier<input type="number" step="0.05" data-mk="${i}" data-f="mult" value="${m.mult}"></label>
+      <label class="f">Traffic vs UK (dummy data)<input type="number" step="0.01" data-mk="${i}" data-f="scale" value="${m.scale}"></label></div>`).join('')}
+    <div class="box"><h3>Add a market</h3><label class="f">Name<input id="m-name" placeholder="e.g. Secret Sales IE"></label>
+      <div class="two"><label class="f">Code<input id="m-code" maxlength="5" placeholder="IE"></label><label class="f">Currency<select id="m-cur"><option>EUR</option><option>GBP</option></select></label></div>
+      <button class="btn primary" id="m-add">Add market</button><p class="note" id="m-err" style="color:var(--red)"></p></div></div>
+  <h2 style="font-size:16px;margin:24px 0 4px">Rate card</h2><p class="note" style="margin:0 0 10px">UK base price in £. Other markets apply their multiplier. Week placements are priced per week.</p>
+  <div class="grid">${S.rateCard.map((r,i)=>`<div class="box"><h3>${esc(r.type)} <span class="note">${CHN[r.channel]}</span></h3><label class="f">Price per ${r.unit} (£)<input type="number" step="50" data-rc="${i}" value="${r.gbp}"></label></div>`).join('')}</div>
+  <h2 style="font-size:16px;margin:24px 0 10px">Demo data</h2><div class="box"><p class="note" style="margin-top:0">Campaigns and settings are saved in this browser only.</p><button class="btn danger" id="reset">Reset to demo data</button></div>`;
+  $('#s-attr').onchange=e=>{S.attributionDays=Math.max(1,+e.target.value||14); save(); toast('Attribution window saved');};
+  $$('[data-fx]').forEach(i=>i.onchange=e=>{S.fx[+i.dataset.fx].eurPerGbp=+e.target.value||1; save(); toast('Exchange rate saved');});
+  $('#fx-add').onclick=()=>{const m=$('#fx-m').value,r=+$('#fx-r').value; if(!m||!r) return; S.fx=S.fx.filter(f=>f.month!==m).concat({month:m,eurPerGbp:r}).sort((a,b)=>a.month.localeCompare(b.month)); save(); renderSettings();};
+  $$('[data-mk]').forEach(i=>i.onchange=e=>{const m=S.markets[+i.dataset.mk], f=i.dataset.f; m[f]=f==='currency'?e.target.value:+e.target.value; save(); toast('Market saved');});
+  $('#m-add').onclick=()=>{const name=$('#m-name').value.trim(), code=$('#m-code').value.trim().toUpperCase().replace(/[^A-Z]/g,'');
+    if(!name||!code){$('#m-err').textContent='Enter a name and a code.'; return;} if(S.markets.some(m=>m.code===code)){$('#m-err').textContent='That code is already used.'; return;}
+    S.markets.push({code,name,currency:$('#m-cur').value,mult:.6,scale:.1}); save(); renderSettings(); toast(name+' added');};
+  $$('[data-rc]').forEach(i=>i.onchange=e=>{S.rateCard[+i.dataset.rc].gbp=+e.target.value||0; save(); toast('Rate card saved');});
+  $('#reset').onclick=()=>{ if(!confirm('Reset all campaigns and settings to the demo data?')) return; S=seed(); save(); toast('Demo data restored'); renderSettings(); };
+}
+render();
+</script>
+</body>
+</html>
